@@ -120,6 +120,16 @@ def logout():
             "?post_logout_redirect_uri=" + url_for("login", _external=True))
 
     return redirect(url_for('login'))
+    
+    
+@app.route('/delete/<int:id>', methods=['POST','GET'])
+def delete(id):  
+    post = Post.query.get(int(id))
+    db.execute('DELETE FROM dbo.POSTS WHERE id = ?'[id])
+    db.commit()
+    flash('Entry deleted')
+    return redirect(url_for('home'))
+    
 
 def _load_cache():
     #Load the cache from `msal`, if it exists
