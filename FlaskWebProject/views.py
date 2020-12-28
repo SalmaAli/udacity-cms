@@ -125,8 +125,8 @@ def logout():
 @app.route('/delete/<int:id>', methods=['POST','GET'])
 def delete(id):  
     post = Post.query.get(int(id))
-    db.execute('DELETE FROM dbo.POSTS WHERE id = ?'[id])
-    db.commit()
+    db.session.delete(post)
+    db.session.commit()
     flash('Entry deleted')
     return redirect(url_for('home'))
     
